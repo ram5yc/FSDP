@@ -1,0 +1,65 @@
+﻿@model IEnumerable<FSDP.DATA.EF.Position>
+
+@{
+    ViewBag.Title = "All Positions Home";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+    </p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1">
+            <table id="displayTable" class="display">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.JobDescription)
+                        </th>
+                        <th>Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JobDescription)
+                            </td>
+                            <td class="col-md-4">
+                                @Html.ActionLink("Edit", "Edit", "Positions", new { id = item.PositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                @Html.ActionLink("Details", "Details", "Positions", new { id = item.PositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                @Html.ActionLink("Delete", "Delete", "Positions", new { id = item.PositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#displayTable').DataTable({
+
+                paging: false
+
+            });
+        });
+
+    </script>
+}

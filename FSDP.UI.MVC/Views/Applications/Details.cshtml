@@ -1,0 +1,77 @@
+﻿@model FSDP.DATA.EF.Application
+
+@{
+    ViewBag.Title = "Application Details";
+}
+@if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+{
+    <div style="text-align:center">
+        <h2>@ViewBag.Title</h2>
+        <p>
+            @*@if (User.IsInRole("Manager"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.ApplicationId })
+                @Html.ActionLink("Edit", "Edit", null, htmlAttributes: new { @class = "btn btn-default", @role = "button", id = "ApplicationId" })
+            }*@
+            @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+        </p>
+    </div>
+    <div>
+        <section id="about" name="about"></section>
+        <div class="container about">
+            <div class="col-lg-8 col-sm-12 col-lg-offset-1">
+                <dl class="dl-horizontal">
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.ApplicationDate)
+                        </dt>*@
+
+                    <dd style="font-size:20px; font-weight:bold">
+                        @Html.DisplayFor(model => model.UserDetail.FirstName)
+                    </dd>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ApplicationDate)
+                    </dd>
+
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.ManagerNote)
+                        </dt>*@
+
+
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.ResumeFilename)
+                        </dt>*@
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ResumeFilename)
+                    </dd>
+
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.ApplicationStatu.StatusName)
+                        </dt>*@
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ApplicationStatu.StatusName)
+                    </dd>
+
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.OpenPosition.OpenPositionId)
+                        </dt>*@
+
+                    <dd>
+                        @Html.DisplayFor(model => model.OpenPosition.Position.Title)
+                    </dd>
+
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.UserDetail.FirstName)
+                        </dt>*@
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ManagerNote)
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+}

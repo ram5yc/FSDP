@@ -1,19 +1,37 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated) {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
-        @Html.AntiForgeryToken()
+@using FSDP.DATA.EF
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
+@{
+    string existingUser = User.Identity.GetUserId();
+    FSDPEntities db = new FSDPEntities();//declared object
+    UserDetail userCredentials = db.UserDetails.Where(x => x.UserId == existingUser).FirstOrDefault();
+    string userName = "Anonymous";
+    if (userCredentials != null)
+    {
+        userName = userCredentials.FirstName;
     }
 }
-else {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+
+@if (Request.IsAuthenticated)
+{
+
+
+
+    <li>
+        @Html.ActionLink($"{userName}", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    <li>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class="logoff"}))
+        {
+            @Html.AntiForgeryToken()<a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        }
+    </li>
+
+}
+else
+{
+
+    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "signin; logoff" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "signin,logoff" })</li>
+
 }

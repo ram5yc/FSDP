@@ -1,0 +1,62 @@
+﻿@model FSDP.DATA.EF.UserDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    <p>
+        @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+    </p>
+</div>
+<section id="about" name="about"></section>
+<div class="container about">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhotoFileName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhotoFileName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ResumeFilename)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ResumeFilename)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@model FSDP.UI.MVC.Models.ContactViewModel
+
+@{
+    ViewBag.Title = "Email Confirmation";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Back to Home", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+ 
+</div>
+<div>
+    <section id="about" name="about"></section>
+    <div class="container about">
+        <div class="col-lg-8 col-lg-offset-2" style="text-align:center">
+            <h4>We received the following message:</h4>
+            <h4 style="color:#2b7e3c;">@Model.Message</h4>
+            <br />
+            <h4>
+                We will respond back as soon as possible to<strong> @Model.Email.</strong> <br /><br />
+                Thank you for contacting us!
+            </h4>
+
+        </div>
+    </div>
+</div>

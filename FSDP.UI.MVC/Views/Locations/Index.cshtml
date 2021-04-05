@@ -1,0 +1,83 @@
+﻿@model IEnumerable<FSDP.DATA.EF.Location>
+
+@{
+    ViewBag.Title = "Location Home";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+
+    <p>
+    <p>
+        @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+    </p>
+    </p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <table id="displayTable" class="display">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserDetail.FullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StoreNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.State)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserDetail.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StoreNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "Locations", new { id = item.LocationId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                @Html.ActionLink("Details", "Details", "Locations", new { id = item.LocationId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                @Html.ActionLink("Delete", "Delete", "Locations", new { id = item.LocationId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+
+                                @*@Html.ActionLink("Edit", "Edit", new { id = item.LocationId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.LocationId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.LocationId })*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#displayTable').DataTable({
+
+                paging: false
+
+            });
+        });
+
+    </script>
+}

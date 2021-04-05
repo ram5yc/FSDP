@@ -1,0 +1,49 @@
+﻿@model FSDP.DATA.EF.Position
+
+@{
+    ViewBag.Title = "Delete Position";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+</div>
+<section id="about" name="about"></section>
+<div class="container about">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div>
+
+            <dl class="dl-horizontal">
+                @*<dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>*@
+
+                <dd style="font-size:20px; font-weight:bold">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+
+                @*<dt>
+                    @Html.DisplayNameFor(model => model.JobDescription)
+                </dt>*@
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobDescription)
+                </dd>
+                <br />
+                <dd>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-default" />
+
+                        </div>
+                    }
+                </dd>
+            </dl>
+
+
+        </div>
+    </div>
+</div>

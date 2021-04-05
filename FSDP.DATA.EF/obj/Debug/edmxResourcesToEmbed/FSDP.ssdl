@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="FSDPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+  <EntityType Name="Applications">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+    </Key>
+    <Property Name="ApplicationId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="OpenPositionId" Nullable="false" Type="int" />
+    <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="ApplicationDate" Nullable="false" Type="date" />
+    <Property Name="ManagerNote" MaxLength="200" Type="varchar" />
+    <Property Name="ApplicationStatus" Nullable="false" Type="int" />
+    <Property Name="ResumeFilename" MaxLength="75" Type="varchar" />
+  </EntityType>
+  <EntityType Name="ApplicationStatus">
+    <Key>
+      <PropertyRef Name="ApplicationStatusId" />
+    </Key>
+    <Property Name="ApplicationStatusId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="StatusName" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="StatusDescription" MaxLength="250" Type="varchar" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="StoreNumber" Nullable="false" MaxLength="10" Type="varchar" />
+    <Property Name="City" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="State" Nullable="false" MaxLength="2" Type="char" />
+    <Property Name="ManagerId" Nullable="false" MaxLength="128" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="OpenPositions">
+    <Key>
+      <PropertyRef Name="OpenPositionId" />
+    </Key>
+    <Property Name="OpenPositionId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PositionId" Nullable="false" Type="int" />
+    <Property Name="LocationId" Nullable="false" Type="int" />
+  </EntityType>
+  <EntityType Name="Positions">
+    <Key>
+      <PropertyRef Name="PositionId" />
+    </Key>
+    <Property Name="PositionId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Title" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="JobDescription" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="FirstName" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="LastName" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="Email" MaxLength="75" Type="nvarchar" />
+    <Property Name="PhotoFileName" MaxLength="75" Type="varchar" />
+    <Property Name="ResumeFilename" MaxLength="75" Type="varchar" />
+  </EntityType>
+  <Association Name="FK_Locations_UserDetails">
+    <End Type="Self.UserDetails" Multiplicity="1" Role="UserDetails" />
+    <End Type="Self.Locations" Multiplicity="*" Role="Locations" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetails">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OpenPositions_Locations">
+    <End Type="Self.Locations" Multiplicity="1" Role="Locations" />
+    <End Type="Self.OpenPositions" Multiplicity="*" Role="OpenPositions" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="OpenPositions">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OpenPositions_Positions">
+    <End Type="Self.Positions" Multiplicity="1" Role="Positions" />
+    <End Type="Self.OpenPositions" Multiplicity="*" Role="OpenPositions" />
+    <ReferentialConstraint>
+      <Principal Role="Positions">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="OpenPositions">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FSDPModelStoreContainer">
+    <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ApplicationStatus" EntityType="Self.ApplicationStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OpenPositions" EntityType="Self.OpenPositions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Locations_UserDetails" Association="Self.FK_Locations_UserDetails">
+      <End EntitySet="UserDetails" Role="UserDetails" />
+      <End EntitySet="Locations" Role="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OpenPositions_Locations" Association="Self.FK_OpenPositions_Locations">
+      <End EntitySet="Locations" Role="Locations" />
+      <End EntitySet="OpenPositions" Role="OpenPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OpenPositions_Positions" Association="Self.FK_OpenPositions_Positions">
+      <End EntitySet="Positions" Role="Positions" />
+      <End EntitySet="OpenPositions" Role="OpenPositions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

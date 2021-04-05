@@ -1,36 +1,57 @@
 ﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Roles Home";
 }
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
 
-<h2>Index</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+    </p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <table id="displayTable" class="display">
+                <thead>
+                    <tr style="margin-left:1em">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            Modify
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "RolesAdmin", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                @Html.ActionLink("Details", "Details", "RolesAdmin", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                @Html.ActionLink("Delete", "Delete", "RolesAdmin", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#displayTable').DataTable({
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
+                paging: false
 
-        </th>
-    </tr>
+            });
+        });
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
-</table>
+    </script>
+}

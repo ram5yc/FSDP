@@ -1,45 +1,48 @@
 ﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Role Details";
 }
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    <p>
+        @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
 
-<h2>Details.</h2>
-
-<div>
-    <h4>Roles.</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+    </p>
 </div>
-<h4>List of users in this role</h4>
-@if (ViewBag.UserCount == 0)
-{
-    <hr />
-    <p>No users found in this role.</p>
-}
+<section id="about" name="about"></section>
+<div class="container about">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div>
 
-<table class="table">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+        </div>
+      
 
-    @foreach (var item in ViewBag.Users)
-    {
-        <tr>
-            <td>
-                @item.UserName
-            </td>
-        </tr>
-    }
-</table>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <table class="table">
+            <tr>
+                <th>
+                   Email
+                </th>
+            </tr>
+            @foreach (var item in ViewBag.Users)
+            {
+                <tr>
+                    <td>
+                        @item.UserName
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
 
 
 

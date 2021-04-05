@@ -1,0 +1,48 @@
+﻿@model FSDP.DATA.EF.OpenPosition
+
+@{
+    ViewBag.Title = "Open Position Details";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    <p>
+        @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+
+    </p>
+</div>
+<section id="about" name="about"></section>
+<div class="container about">
+    <div class="col-lg-8 col-lg-offset-1">
+        <div>
+
+            <dl class="dl-horizontal">
+                @*<dt>
+                   @Html.DisplayNameFor(model => model.Position.Title)
+                </dt>*@
+
+                <dd style="font-size:20px;font-weight:bold">
+                    @Html.DisplayFor(model => model.Position.Title)
+                </dd>
+                @*<dt>
+                    Branch
+                </dt>*@
+
+                <dd>
+                    @Html.DisplayFor(model => model.Location.City),
+                    @Html.DisplayFor(model => model.Location.State)
+                </dd>
+
+                @*<dt>
+                    Description
+                </dt>*@
+                <dd>
+                    @Html.DisplayFor(model => model.Position.JobDescription)
+                </dd>
+
+
+            </dl>
+        </div>
+
+    </div>
+</div>

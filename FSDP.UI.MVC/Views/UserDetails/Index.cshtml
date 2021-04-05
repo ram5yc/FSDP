@@ -1,0 +1,38 @@
+﻿@model IEnumerable<FSDP.DATA.EF.UserDetail>
+
+@{
+    ViewBag.Title = "User Home";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+
+</div>
+@foreach (var item in Model)
+{
+    <div class="row col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1" style="padding:5em;">
+        <div class="col-md-8 col-md-offset-2 col-sm-7 col-sm-offset-4">
+            <div class="card" style="width: 35rem; padding:3em">
+                <div class="card-body text-center">
+                    <h1 class="card-title">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </h1>
+                </div>
+                <div class="card-subtitle mb-2 text-muted text-center"><h4>Email :  @Html.DisplayFor(modelItem => item.Email)</h4></div>
+                <div class="card-text text-center">
+                    <h4>Resume :  <a href="~/Content/assets/img/Rachel Mantei Resume IT.pdf" target="_blank" style="font-weight:bold" class="resumeSection">My Resume</a></h4>
+                </div>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.PhotoFileName)
+                    </th>*@
+                <div class="card-links text-center">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId}, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+             
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

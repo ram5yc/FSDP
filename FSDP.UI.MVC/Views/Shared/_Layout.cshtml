@@ -1,49 +1,220 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <title>Absolute Bank - Beyond Banking</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <!-- Favicons -->
 
+    <link href="~/Content/img/favicon.ico" rel="icon" />
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic|Raleway:400,300,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="~/Content/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-------MVC PAGING------->
+    @*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
+    <!-- Main Stylesheet File -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+
+    <!-------DATA TABLES JQuery-->
+    <link href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <!-- =======================================================
+      Template Name: Freelance
+      Template URL: https://templatemag.com/freelance-bootstrap-template/
+      Author: TemplateMag.com
+      License: https://templatemag.com/license/
+    ======================================================= -->
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
-                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+<body data-spy="scroll" data-offset="0" data-target="#gn-menu">
+
+    <!-- ========== MAIN MENU ========== -->
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main">
+            <li class="gn-trigger">
+                <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+
+                            <li><a href="@Url.Action("Index", "Home")" class="gn-icon gn-icon-home">Home</a></li>
+
+                            @if (User.IsInRole("Manager") || User.IsInRole("Admin") || User.IsInRole("Employee"))
+                            {
+                                <li><a href="@Url.Action("Index","OpenPositions")" class="gn-icon gn-icon-pictures">Openings</a></li>
+                            }
+                            @if (User.IsInRole("Manager") || User.IsInRole("Admin") || User.IsInRole("Employee"))
+                            {
+                                <li><a href="@Url.Action("Index","Applications")" class="gn-icon gn-icon-article">Applications</a></li>
+                            }
+
+
+                            @*@if (User.IsInRole("Employee"))
+                                {
+                                    <li><a href="@Url.Action("UploadResume","Home")" class="gn-icon gn-icon-envelop">Upload Resume</a></li>
+                                }*@
+
+                            @*@if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Index", "ApplicationStatus")" class="gn-icon gn-icon-envelop">Application Status</a></li>
+                                }*@
+
+                            <li><a href="@Url.Action("Index", "UserDetails")" class="gn-icon gn-icon-earth">My Account</a></li>
+
+                            <li><a href="@Url.Action("Contact","Home")" class="gn-icon gn-icon-envelop">Contact</a></li>
+                        </ul>
+                    </div>
+                    <!-- /gn-scroller -->
+                </nav>
+            </li>
+
+            @Html.Partial("_loginPartial")
+
+            @*<li>@html.Actionlink("register", "register", "account", routevalues: null, htmlattributes: new { id = "registerlink", @class = "signin" })</li>
+
+                <li>@html.Actionlink("log in", "login", "account", routevalues: null, htmlattributes: new { id = "loginlink", @class = "signin" })</li>*@
+
+
+            @if (User.IsInRole("Employee"))
+            {
+                <li class="hideText"><a href="@Url.Action("Index","OpenPositions")" style="font-size:15px;">Search For Jobs</a></li>
+            }
+        </ul>
+    </div>
+
+    <!-- /container -->
+
+
+    <div class="body" style="min-height:75vh">
+        @RenderBody()
+    </div>
+
+
+    <div class="footer">
+        <section id="contact" name="contact"></section>
+        <div id="footerwrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <h3>Address</h3>
+                        <p>
+                            123 Drury Lane<br /> Muffin Man, Duloc<br /> 90873
+                            <br /> United States
+                        </p>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <h3>Documentation</h3>
+                        <a href="@Url.Content("~/Content/img/RACHELMANTEIdocumentation.pdf")" target="_blank">Project Documentation</a>
+                    </div>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {<div class="col-lg-3 col-md-3 col-sm-12">
+                            <h5 class="lined lined-dark mb-3">Administrative Links</h5>
+
+
+                            <ul style="list-style-type: none">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Index", "RolesAdmin")" class="nav-link">Roles</a></li>
+                                }
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Index", "UsersAdmin")" class="nav-link">Current Users</a></li>
+                                }
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Index","Locations")">Locations</a></li>
+                                }
+                                @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Index", "Positions")">Positions</a></li>
+                                }
+                            </ul>
+                        </div>
                     }
-                </ul>
-                @Html.Partial("_LoginPartial")
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <h3>Call us:</h3>
+                        <p>
+                            <a href="tel:01-18002438865"> 1-800-243-8865</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="copyrights">
+            <div class="container">
+                <p>
+                    &copy; Copyrights <strong>Freelance</strong>. All Rights Reserved
+                </p>
+                <div class="credits">
+                    <!--
+                      You are NOT allowed to delete the credit link to TemplateMag with free version.
+                      You can delete the credit link only if you bought the pro version.
+                      Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/freelance-bootstrap-template/
+                      Licensing information: https://templatemag.com/license/
+                    -->
+                    Created with Freelance template by <a href="https://templatemag.com/">TemplateMag</a>.<br />Improved by Rachel Mantei.
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- JavaScript Libraries -->
+    <script src="~/Content/lib/jquery/jquery.min.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/chart/chart.js"></script>
+    <script src="~/Content/lib/classie/classie.js"></script>
+    <script src="~/Content/lib/gnmenu/gnmenu.js"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="~/Content/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!----DataTables Script JQuery-->
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+                                        //$(document).ready(function () {
+
+                                        //    if (screen.width < 1024) {
+                                        //        $(".hide").hide();
+                                        //    }
+                                        //    else {
+
+                                        //        $(".hide").show();
+                                        //    }
+
+                                        //});
+
+                                        //$(document).ready(function () {
+
+                                        //    if ((screen.width > 1024)) {
+                                        //        // if screen size is 1025px wide or larger
+                                        //        $(".hide").css('display', 'none'); // you can also use $(".yourClass").hide();
+                                        //    }
+                                        //    elseif((screen.width <= 1024))  {
+                                        //        // if screen size width is less than 1024px
+                                        //        $(".hide").css('display', 'block'); // here you can also use show();
+                                        //    }
+                                        //});
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+

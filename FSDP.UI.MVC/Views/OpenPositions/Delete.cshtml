@@ -1,0 +1,49 @@
+﻿@model FSDP.DATA.EF.OpenPosition
+
+@{
+    ViewBag.Title = "Delete Open Position";
+}
+@if (User.IsInRole("Manager"))
+{
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+</div>
+    <section id="about" name="about"></section>
+    <div class="container about">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Location.StoreNumber)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Location.StoreNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Position.Title)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Position.Title)
+                    </dd>
+                    <br />
+                    <dd>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Delete" class="btn btn-default" />
+                            </div>
+                        }
+                    </dd>
+                </dl>
+
+
+            </div>
+        </div>
+    </div>
+}

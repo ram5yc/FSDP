@@ -1,41 +1,130 @@
-﻿@model IdentitySample.Models.RegisterViewModel
+﻿@model FSDP.UI.MVC.Models.RegisterViewModel
 @{
+    /**/
+
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+</div>
+<section id="about" name="about"></section>
+<div class="container about">
+    <div class="col-md-10 col-lg-7 col-md-offset-3">
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @enctype = "multipart/form-data", id = "register" }))
+        {
+            @Html.AntiForgeryToken()
 
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.FirstName, new { @class = "col-md-4 control-label" })*@
+                <div class="col-md-8" style="padding-bottom:1em;">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.LastName, new { @class = "col-md-4 control-label" })*@
+                <div class="col-md-8" style="padding-bottom:1em;">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                </div>
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })*@
+                <div class="col-md-8" style="padding-bottom:1em;">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required", placeholder = "Email" })
+                </div>
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })*@
+                <div class="col-md-8" style="padding-bottom:1em;">
+                  
+                    @*<input type="password" placeholder="Type password here" class="form-control" id="pwd" autocomplete="off" />
+                        <div id="progress">
+                            <div id="progress-bar"></div>
+                        </div>*@
+                 
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control input", id="password", placeholder = "Type Your Password here" })
+                        @*<input name="password" id="password" type="password" placeholder="Type Your Password here" />&nbsp;&nbsp;*@
+                        <span id="result"></span>
+                 
+                </div>
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })*@
+                <div class="col-md-8" style="padding-bottom:1em;">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", id = "confirmPassword", placeholder = "Confirm Password" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(m => m.PhotoFileName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.PhotoFileName, new { @class = "form-control", type="file", name="imageFile" })
+                        <input type="file" name="imageFile" />
+                    </div>
+                </div>*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.ResumeFileName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-5" style="padding-bottom:1em;">
+                    <input type="file" required="required" name="resumeFile" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-5">
+                    <input type="submit" class="btn btn-default" value="Register" />
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#password').keyup(function () { //release of key 
+                $('#result').html(checkStrength($('#password').val()))
+            })
+            function checkStrength(password) {
+                var strength = 0
+                if (password.length < 5) {
+                    $('#result').removeClass()
+                    $('#result').addClass('short')
+                    $('#result').addClass('important red');
+                    return 'Too short'
+                }
+                if (password.length > 7) strength += 1
+                // contains both lower and uppercase characters, increase strength
+                if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+                // mixture of numbers and characters, increase strength
+                if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+                // one special character, increase strength
+                if (password.match(/([!,%,&,#,$,^,*,?,_,~])/)) strength += 1
+                // two special characters, increase strength
+                if (password.match(/(.*[!,%,&,#,$,^,*,?,_,~].*[!,%,&,#,$,^,*,?,_,~])/)) strength += 1
+                // Calculated strength value, we can return messages
+                // If value is less than 2
+                if (strength < 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('weak')
+                    $('#result').addClass('important orange');
+                    return 'Weak'
+                } else if (strength == 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('good')
+                    $('#result').addClass('importantBlue');
+                    return 'Good'
+                } else {
+                    $('#result').removeClass()
+                    $('#result').addClass('strong')
+                    $('#result').addClass('important strong green');
+                    return 'Strong'
+                }
+            }
+        });
+    </script>
 }
+

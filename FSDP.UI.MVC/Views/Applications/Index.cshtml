@@ -1,0 +1,115 @@
+﻿@model IEnumerable<FSDP.DATA.EF.Application>
+@*@model PagedList.IPagedList<FSDP.DATA.EF.Application>
+    @using PagedList.Mvc;*@
+
+@{
+    ViewBag.Title = "Application Home";
+}
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    <p>
+        @*@Html.ActionLink("Back To List", "Index", "OpenPositions", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })*@
+
+        @*@if (User.IsInRole("Manager"))
+            {
+
+                @Html.ActionLink("Create a New Opening", "Create", "OpenPositions", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+
+            }*@
+    </p>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-10 col-md-offset-1">
+            <table id="displayTable" class="display">
+                <thead>
+                    <tr>
+                        <th>
+                            Applicant
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().ApplicationStatu.StatusName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().OpenPosition.Position)
+                        </th>
+                        <th class="hideRows">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().OpenPosition.Location.State)
+                        </th>
+                        <th class="hideRows">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().ApplicationDate)
+                        </th>
+                        <th>
+                            @if (User.IsInRole("Manager") || (User.IsInRole("Admin")))
+                            {
+                                @Html.DisplayName("Modify")
+                            }
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserDetail.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ApplicationStatu.StatusName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpenPosition.Position.Title)
+                            </td>
+                            <td class="hideRows">
+                                @Html.DisplayFor(modelItem => item.OpenPosition.Location.State)
+                            </td>
+                            <td class="hideRows">
+                                @Html.DisplayFor(modelItem => item.ApplicationDate)
+                            </td>
+                            <td class="col-md-4">
+
+                                @if (User.IsInRole("Manager"))
+                                {
+
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ApplicationId })*@
+                                    @Html.ActionLink("Edit", "Edit", "Applications", new { id = item.ApplicationId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+
+                                }
+
+                                @if (User.IsInRole("Manager") || (User.IsInRole("Admin")))
+                                {
+
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.ApplicationId })*@
+                                    @Html.ActionLink("Details", "Details", "Applications", new { id = item.ApplicationId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+
+                                }
+                                @*@Html.ActionLink("Delete", "Delete", new { id = item.ApplicationId })*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!--Will display the page # out of how many-->
+
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#displayTable').DataTable({
+
+                paging: false,
+                bInfo: false
+            });
+        });
+
+    </script>
+
+}
+

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace IdentitySample.Models
+namespace FSDP.UI.MVC.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
@@ -64,10 +64,28 @@ namespace IdentitySample.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "First Name is required.")]
+        [StringLength(50, ErrorMessage = "The first name must be 50 characters or less.")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name is required.")]
+        [StringLength(50, ErrorMessage = "The last name must be 50 characters or less.")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         [EmailAddress]
         [Display(Name = "Email")]
+        [StringLength(75, ErrorMessage = "The email must be 75 characters or less.")]
         public string Email { get; set; }
+
+        [Display(Name = "Photo File Name")]
+        [StringLength(75, ErrorMessage = "The photo file must be 75 characters or less.")]
+        public string PhotoFileName { get; set; }
+
+        [Display(Name = "Resume File Name")]
+        [StringLength(75, ErrorMessage = "The resume file must be 75 characters or less.")]
+        public string ResumeFileName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

@@ -1,0 +1,93 @@
+﻿@*@model IEnumerable<FSDP.DATA.EF.OpenPosition>*@
+@model PagedList.IPagedList<FSDP.DATA.EF.OpenPosition>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Open Positions";
+}
+
+<div style="text-align:center">
+    <h2>@ViewBag.Title</h2>
+    @if (User.IsInRole("Manager") || (User.IsInRole("Admin")))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+        </p>
+    }
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <table id="displayTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+
+                        <th>Position</th>
+
+                        <th>Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Location.City),
+                                @Html.DisplayFor(modelItem => item.Location.State)
+                            </td>
+
+                            <td>@Html.DisplayFor(modelItem => item.Position.Title)</td>
+
+                            <td class="col-2">
+                                @if (User.IsInRole("Manager") || (User.IsInRole("Admin")))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", "OpenPositions", new { id = item.OpenPositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                }
+
+                                @Html.ActionLink("Details", "Details", "OpenPositions", new { id = item.OpenPositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+
+                                @if (User.IsInRole("Manager"))
+                                {
+                                    @Html.ActionLink("Delete", "Delete", "OpenPositions", new { id = item.OpenPositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                }
+
+
+                                @if (User.IsInRole("Employee"))
+                                {
+                                    @Html.ActionLink("Apply", "Apply", "OpenPositions", new { id = item.OpenPositionId }, htmlAttributes: new { @class = "btn btn-default", @role = "button" })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!--Will display the page # out of how many-->
+            <div class="text-center">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                of @Model.PageCount
+
+                <!--Pager - shows current page and links to other pages(PagedList) w/o search functionality - updates pager to receive Search Value--->
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchCategory = ViewBag.SearchCategory, locatonid = ViewBag.LocationID }))
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#displayTable').DataTable({
+
+                paging: false,
+                bInfo : false
+
+            });
+        });
+
+    </script>
+}
+
